@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonPaddingVertical="50dp"
         app:autoFocusButtonVisible="true"
         app:flashButtonColor="@android:color/white"
+        app:flashButtonPaddingVertical="50dp"
         app:flashButtonVisible="true"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
@@ -27,6 +29,7 @@
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="30dp"
             android:max="30"
             android:min="1" />
     </com.budiyev.android.codescanner.CodeScannerView>
