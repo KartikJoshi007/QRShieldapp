@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val logo = findViewById<ImageView>(R.id.splash_logo)
-        logo.setImageResource(R.drawable.logo) // Make sure splash_logo.png is in res/drawable
+        logo.setImageResource(R.drawable.logo2) // Make sure splash_logo.png is in res/drawable
 
         // Delay before opening LoginActivity
         Handler(Looper.getMainLooper()).postDelayed({
