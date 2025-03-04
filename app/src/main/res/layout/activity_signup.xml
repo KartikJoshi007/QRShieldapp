@@ -19,18 +19,26 @@
         android:id="@+id/et_signup_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
+
         android:hint="Username"/>
 
     <EditText
         android:id="@+id/et_signup_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
+
         android:hint="Email"/>
 
     <EditText
         android:id="@+id/et_signup_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
         android:hint="Password"
         android:inputType="textPassword"/>
 
@@ -38,6 +46,8 @@
         android:id="@+id/et_signup_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLines="1"
         android:hint="Confirm Password"
         android:inputType="textPassword"/>
 
