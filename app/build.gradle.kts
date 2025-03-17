@@ -46,4 +46,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("com.github.yuriy-budiyev:code-scanner:2.3.0")
+    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.15.1")
+    implementation("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
+    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.14.1")
+    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
 }

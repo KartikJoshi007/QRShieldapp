@@ -33,6 +33,10 @@
         <activity android:name=".LoginActivity" android:exported="true" />
         <activity android:name=".HomeActivity" android:exported="true" />
         <activity android:name=".MainActivity" android:exported="true" />
+        <activity android:name=".ResultActivity" android:exported="true"/>
+
+
+
 
     </application>
 

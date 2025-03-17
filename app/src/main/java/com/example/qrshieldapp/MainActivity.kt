@@ -1,7 +1,9 @@
 package com.example.qrshieldapp
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -39,12 +41,25 @@ class MainActivity : AppCompatActivity() {
         codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
         codeScanner.isFlashEnabled = false // Whether to enable flash or not
 
-        // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                it?.let { result ->
+                    val scannedUrl = result.text
+                    Log.d("QRScanner", "Scanned QR Code: $scannedUrl")
+                    Toast.makeText(this, "Scanned: $scannedUrl", Toast.LENGTH_LONG).show()
+
+                    val intent = Intent(this, ResultActivity::class.java)
+                    intent.putExtra("SCANNED_URL", scannedUrl)
+
+                    Log.d("QRScanner", "Starting ResultActivity...")
+                    startActivity(intent)
+                } ?: Log.e("QRScanner", "Scan result is null!")
             }
         }
+
+
+
+
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             runOnUiThread {
                 Toast.makeText(this, "Camera initialization error: ${it.message}",
