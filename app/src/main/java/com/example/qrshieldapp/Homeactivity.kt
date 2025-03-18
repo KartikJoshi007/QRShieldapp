@@ -13,8 +13,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_homeactivity)
 
         val scanButton = findViewById<Button>(R.id.btn_scan)
-        val pasteButton = findViewById<Button>(R.id.btn_paste)
-        val urlInput = findViewById<EditText>(R.id.et_url)
+
 
         // Open QR Scanner (MainActivity)
         scanButton.setOnClickListener {
@@ -23,14 +22,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // Handle pasted URL
-        pasteButton.setOnClickListener {
-            val url = urlInput.text.toString().trim()
-            if (url.isNotEmpty()) {
-                Toast.makeText(this, "URL Entered: $url", Toast.LENGTH_SHORT).show()
-                // Process the URL (e.g., check for phishing)
-            } else {
-                Toast.makeText(this, "Please enter a URL!", Toast.LENGTH_SHORT).show()
-            }
-        }
+
     }
 }
