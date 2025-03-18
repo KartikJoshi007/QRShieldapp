@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -42,6 +43,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -50,4 +54,17 @@ dependencies {
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
     implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.14.1")
     implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
+
+
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1")) // Firebase BOM (Always use latest version)
+
+    // Firebase Core Services
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")  // Authentication
+    implementation("com.google.firebase:firebase-firestore-ktx") // Firestore Database
+    implementation("com.google.firebase:firebase-database-ktx") // Realtime Database
+    implementation("com.google.firebase:firebase-storage-ktx") // Firebase Storage
+    implementation("com.google.firebase:firebase-messaging-ktx") // Firebase Cloud Messaging (Push Notifications)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Compatible Coroutines version
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175499436375",
+    "project_id": "qrshield-app-d1316",
+    "storage_bucket": "qrshield-app-d1316.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175499436375:android:6c9aa9157b643aaf1ade12",
+        "android_client_info": {
+          "package_name": "com.example.qrshieldapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS0FPwOpALI28QMFPiipIxl_MdaiUapAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
