@@ -1,5 +1,4 @@
-package com.example.qrshieldapp  // Replace with your actual package name
-
+package com.example.qrshieldapp
 
 import android.content.Intent
 import android.net.Uri
@@ -18,38 +17,40 @@ class ResultActivity : AppCompatActivity() {
         val btnProceed: Button = findViewById(R.id.btnProceed)
 
         val scannedUrl = intent.getStringExtra("SCANNED_URL") ?: ""
+        val isMalicious = intent.getBooleanExtra("IS_MALICIOUS", false)
+
         Log.d("QRScanner", "Scanned URL: $scannedUrl")
 
-        try {
-            val model = TFLiteModel(this)
-            val features = extractFeatures(scannedUrl) // Convert URL to feature array
-            val prediction = model.predict(features)
+        if (isMalicious) {
+            // Directly mark as malicious
+            tvPrediction.text = "⚠️ This URL is Malicious!"
+            btnProceed.text = "Blocked"
+            btnProceed.isEnabled = false
+        } else {
+            // Process URL with ML Model
+            try {
+                val model = TFLiteModel(this)
+                val features = extractFeatures(scannedUrl)
+                val prediction = model.predict(features)
 
-            val resultText = if (prediction > 0.5) "Malicious" else "Safe"
-            tvPrediction.text = resultText
+                val resultText = if (prediction > 0.5) "Malicious" else "Safe"
+                tvPrediction.text = resultText
 
-            btnProceed.visibility = Button.VISIBLE
-
-
-
-
-            if (resultText == "Safe") {
-                btnProceed.text = "Proceed to Site"
-                btnProceed.setOnClickListener {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(scannedUrl)))
+                btnProceed.visibility = Button.VISIBLE
+                if (resultText == "Safe") {
+                    btnProceed.text = "Proceed to Site"
+                    btnProceed.setOnClickListener {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(scannedUrl)))
+                    }
+                } else {
+                    btnProceed.text = "Blocked: Malicious URL"
+                    btnProceed.isEnabled = false
                 }
-            } else {
-                btnProceed.text = "Blocked: Malicious URL"
-                btnProceed.isEnabled = false
+            } catch (e: Exception) {
+                Log.e("ResultActivity", "Error running TFLite model: ${e.message}")
+                tvPrediction.text = "Error: Unable to process the URL."
             }
-        } catch (e: Exception) {
-            Log.e("ResultActivity", "Error running TFLite model: ${e.message}")
-            tvPrediction.text = "Error: Unable to process the URL."
         }
-
-
-
-
     }
 
     private fun extractFeatures(url: String): FloatArray {

@@ -52,8 +52,7 @@ dependencies {
     implementation ("com.github.yuriy-budiyev:code-scanner:2.3.0")
     implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.15.1")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
-    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.14.1")
-    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
+
 
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.1")) // Firebase BOM (Always use latest version)

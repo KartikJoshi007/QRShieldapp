@@ -40,16 +40,13 @@ class MainActivity : AppCompatActivity() {
                 Log.d("QRScanner", "Scanned URL: $scannedUrl")
                 Toast.makeText(this, "Scanned: $scannedUrl", Toast.LENGTH_LONG).show()
 
-                // Start ResultActivity with scanned URL
-                try {
-                    val intent = Intent(this, ResultActivity::class.java)
-                    intent.putExtra("SCANNED_URL", scannedUrl)
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Log.e("MainActivity", "Error launching ResultActivity: ${e.message}")
-                    Toast.makeText(this, "Failed to open ResultActivity", Toast.LENGTH_LONG).show()
-                }
+                // Logic to mark URL as malicious or pass to ML model
+                val isMalicious = scannedUrl.contains("http") && !scannedUrl.contains("https") || scannedUrl.contains("8080")
 
+                val intent = Intent(this, ResultActivity::class.java)
+                intent.putExtra("SCANNED_URL", scannedUrl)
+                intent.putExtra("IS_MALICIOUS", isMalicious) // Pass status to ResultActivity
+                startActivity(intent)
             }
         }
 
