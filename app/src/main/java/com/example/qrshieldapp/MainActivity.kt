@@ -1,5 +1,6 @@
 package com.example.qrshieldapp
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,19 +11,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
-import java.security.Permission
+import com.budiyev.android.codescanner.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var codeScanner: CodeScanner
+    private lateinit var codeScanner: CodeScanner
+    private val CAMERA_PERMISSION_CODE = 200
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,64 +24,60 @@ class MainActivity : AppCompatActivity() {
 
         val scannerView = findViewById<CodeScannerView>(R.id.scanner_view)
 
-        codeScanner = CodeScanner(this, scannerView)
+        codeScanner = CodeScanner(this, scannerView).apply {
+            camera = CodeScanner.CAMERA_BACK
+            formats = CodeScanner.ALL_FORMATS
+            autoFocusMode = AutoFocusMode.SAFE
+            scanMode = ScanMode.SINGLE
+            isAutoFocusEnabled = true
+            isFlashEnabled = false
+        }
 
-        // Parameters (default values)
-        codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
-        codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
-        // ex. listOf(BarcodeFormat.QR_CODE)
-        codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
-        codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
-        codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
-        codeScanner.isFlashEnabled = false // Whether to enable flash or not
-
-        codeScanner.decodeCallback = DecodeCallback {
+        // Handle QR Code Scan Results
+        codeScanner.decodeCallback = DecodeCallback { result ->
             runOnUiThread {
-                it?.let { result ->
-                    val scannedUrl = result.text
-                    Log.d("QRScanner", "Scanned QR Code: $scannedUrl")
-                    Toast.makeText(this, "Scanned: $scannedUrl", Toast.LENGTH_LONG).show()
+                val scannedUrl = result.text
+                Log.d("QRScanner", "Scanned URL: $scannedUrl")
+                Toast.makeText(this, "Scanned: $scannedUrl", Toast.LENGTH_LONG).show()
 
+                // Start ResultActivity with scanned URL
+                try {
                     val intent = Intent(this, ResultActivity::class.java)
                     intent.putExtra("SCANNED_URL", scannedUrl)
-
-                    Log.d("QRScanner", "Starting ResultActivity...")
                     startActivity(intent)
-                } ?: Log.e("QRScanner", "Scan result is null!")
+                } catch (e: Exception) {
+                    Log.e("MainActivity", "Error launching ResultActivity: ${e.message}")
+                    Toast.makeText(this, "Failed to open ResultActivity", Toast.LENGTH_LONG).show()
+                }
+
             }
         }
 
-
-
-
-        codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
+        // Handle Errors
+        codeScanner.errorCallback = ErrorCallback {
             runOnUiThread {
-                Toast.makeText(this, "Camera initialization error: ${it.message}",
-                    Toast.LENGTH_LONG).show()
+                Log.e("QRScanner", "Camera error: ${it.message}")
+                Toast.makeText(this, "Camera initialization error: ${it.message}", Toast.LENGTH_LONG).show()
             }
         }
 
+        // Start scanning when clicking on the scanner view
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
 
-        var seekBar = findViewById<SeekBar>(R.id.seekBar)
+        // Zoom feature using SeekBar
+        val seekBar = findViewById<SeekBar>(R.id.seekBar)
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                codeScanner.zoom = p1
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                codeScanner.zoom = progress
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        checkPermission(android.Manifest.permission.CAMERA, 200)
+        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
     }
 
     override fun onResume() {
@@ -100,13 +90,10 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    fun checkPermission(permission: String, reqCode:Int)
-    {
-        if(ContextCompat.checkSelfPermission(this,permission) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, arrayOf(permission),reqCode)
+    // Function to check and request camera permissions
+    private fun checkPermission(permission: String, reqCode: Int) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(permission), reqCode)
         }
     }
-
-
 }

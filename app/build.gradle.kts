@@ -67,4 +67,8 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx") // Firebase Cloud Messaging (Push Notifications)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Compatible Coroutines version
+    implementation ("org.tensorflow:tensorflow-lite:2.12.0")
+
+
+
 }
