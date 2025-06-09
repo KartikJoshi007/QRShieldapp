@@ -34,7 +34,7 @@
                 android:id="@+id/btn_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="@string/scan_qr_code"/>
+                android:text="@string/scan_qr_code" />
         </LinearLayout>
 
     </LinearLayout>

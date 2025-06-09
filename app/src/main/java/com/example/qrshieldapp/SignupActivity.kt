@@ -22,7 +22,7 @@ class SignupActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.et_signup_email)
         val password = findViewById<EditText>(R.id.et_signup_password)
         val confirmPassword = findViewById<EditText>(R.id.et_signup_confirm_password)
-        val registerButton = findViewById<Button>(R.id.btn_register)
+        val registerButton = findViewById<Button>(R.id.btn_signup)
         val loginText = findViewById<TextView>(R.id.tv_login)
 
         registerButton.setOnClickListener {
