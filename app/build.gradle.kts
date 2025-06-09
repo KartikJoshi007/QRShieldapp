@@ -51,19 +51,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("com.github.yuriy-budiyev:code-scanner:2.3.0")
-    implementation ("com.microsoft.onnxruntime:onnxruntime-android:1.15.1")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
 
 
 
-    implementation(platform("com.google.firebase:firebase-bom:32.7.1")) // Firebase BOM (Always use latest version)
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0")) // Firebase BOM (Always use latest version)
 
     // Firebase Core Services
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")  // Authentication
-    implementation("com.google.firebase:firebase-firestore-ktx") // Firestore Database
-    implementation("com.google.firebase:firebase-database-ktx") // Realtime Database
-    implementation("com.google.firebase:firebase-storage-ktx") // Firebase Storage
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx") // Firebase Cloud Messaging (Push Notifications)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Compatible Coroutines version
