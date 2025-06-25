@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="20dp">
+    android:padding="24dp"
+    android:background="#F5F5F5">
 
-    <TextView
-        android:id="@+id/tvPrediction"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="URL Analysis Result"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="20dp"/>
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="8dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvPrediction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analyzing..."
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:id="@+id/tvUrlDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="URL will appear here"
+                android:textSize="16sp"
+                android:textColor="#666666"
+                android:gravity="center" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnProceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Proceed to Website"
-        android:visibility="gone"/>
+        android:text="Proceed"
+        android:visibility="gone"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp" />
 </LinearLayout>

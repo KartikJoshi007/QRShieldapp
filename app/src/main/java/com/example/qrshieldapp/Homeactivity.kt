@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,6 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatDelegate
+
+
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
@@ -60,7 +65,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userEmailTextView.text = user.email ?: "No Email"
 
         // Scan QR Button
-        findViewById<Button>(R.id.btn_scan).setOnClickListener {
+        findViewById<ImageView>(R.id.btn_scan).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
@@ -82,8 +87,17 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun toggleTheme() {
-        Toast.makeText(this, "Theme change coming soon!", Toast.LENGTH_SHORT).show()
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Toast.makeText(this, "Switched to Light Mode", Toast.LENGTH_SHORT).show()
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            Toast.makeText(this, "Switched to Dark Mode", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
