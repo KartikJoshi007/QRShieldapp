@@ -17,11 +17,11 @@
         app:flashButtonVisible="true"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
-        app:frameColor="@android:color/white"
-        app:frameCornersRadius="0dp"
-        app:frameCornersSize="50dp"
+        app:frameColor="@android:color/holo_purple"
+        app:frameCornersRadius="60dp"
+        app:frameCornersSize="40dp"
         app:frameSize="0.75"
-        app:frameThickness="2dp"
+        app:frameThickness="5dp"
         app:frameVerticalBias="0.5"
         app:maskColor="#77000000">
 
@@ -29,9 +29,10 @@
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="30dp"
             android:max="30"
-            android:min="1" />
+            android:min="1"
+            android:paddingVertical="30dp" />
+
     </com.budiyev.android.codescanner.CodeScannerView>
 
 </FrameLayout>
