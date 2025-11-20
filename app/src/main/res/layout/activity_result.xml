@@ -45,6 +45,16 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="254dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FFFFFF"
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="8dp">
+
+    </androidx.cardview.widget.CardView>
+
     <Button
         android:id="@+id/btnProceed"
         android:layout_width="match_parent"

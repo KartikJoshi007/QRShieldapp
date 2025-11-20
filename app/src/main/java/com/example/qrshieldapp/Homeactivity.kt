@@ -1,28 +1,27 @@
 package com.example.qrshieldapp
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatDelegate
-
-
+import androidx.drawerlayout.widget.DrawerLayout
+import android.view.MenuItem
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -33,9 +32,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homeactivity)
 
-        // Initialize Firebase
+        // Initialize Firebase (ensure user is logged in)
         auth = FirebaseAuth.getInstance()
-        user = auth.currentUser!!
+        user = auth.currentUser ?: return
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.uid)
 
         // Drawer Layout & Toolbar
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        // Set User Info in Navigation Drawer
+        // Set User Info in Navigation Drawer header (if available)
         val headerView = navigationView.getHeaderView(0)
         val userNameTextView: TextView = headerView.findViewById(R.id.user_name)
         val userEmailTextView: TextView = headerView.findViewById(R.id.user_email)
@@ -64,9 +64,30 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userNameTextView.text = user.displayName ?: "User"
         userEmailTextView.text = user.email ?: "No Email"
 
-        // Scan QR Button
+        // Scan Image click -> open scanner activity (MainActivity)
         findViewById<ImageView>(R.id.btn_scan).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        // Bottom Navigation handling
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNav.selectedItemId = R.id.nav_scan
+        bottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_scan -> {
+                    // Already home / scanner screen - do nothing
+                    true
+                }
+                R.id.nav_link -> {
+                    startActivity(Intent(this, EnterUrlActivity::class.java))
+                    true
+                }
+                R.id.nav_history -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -88,7 +109,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun toggleTheme() {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-
         if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             Toast.makeText(this, "Switched to Light Mode", Toast.LENGTH_SHORT).show()
@@ -97,7 +117,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Toast.makeText(this, "Switched to Dark Mode", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
