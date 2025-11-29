@@ -56,7 +56,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.appcompat)
-    implementation(libs.transport.api)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -92,4 +92,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation( "androidx.recyclerview:recyclerview:1.3.0")
+    implementation ("com.google.android.material:material:1.9.0")
+
 }

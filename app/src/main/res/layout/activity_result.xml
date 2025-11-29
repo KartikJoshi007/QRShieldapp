@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    tools:context=".ResultActivity">
 
     <!-- Top result card (ML + API final verdict shown here) -->
     <androidx.cardview.widget.CardView
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FFFFFF"
-        android:visibility="visible"
+        android:visibility="gone"
         card_view:cardCornerRadius="12dp"
         card_view:cardElevation="6dp">
 
@@ -114,7 +115,8 @@
                 android:layout_marginTop="8dp"
                 android:text="Risk: —"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="visible" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
